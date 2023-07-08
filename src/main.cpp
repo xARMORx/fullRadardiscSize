@@ -31,12 +31,9 @@ kthook::kthook_simple<CRadarSpriteDrawSignature> CRadarHook{};
 int radardiscAddr[]{0x58A8C2, 0x58A96C, 0x58AA1A};
 
 void CRadar2d__DrawSprite(const decltype(CRadarHook)& hook, void* this_, void* EDX, CRect* rect, CRGBA* color){
-    int screenW = GetSystemMetrics(SM_CXSCREEN);
-    int screenH = GetSystemMetrics(SM_CYSCREEN);
-    float width = read_memory<float>((void*)*reinterpret_cast<uint32_t*>(0x5834C2));
-    float height = read_memory<float>((void*)*reinterpret_cast<uint32_t*>(0x58A47D));
-    rect->right += (width * (screenW * 0.00085f));
-    rect->top += (height * (screenH * 0.0012f));
+    rect->right += (rect->right - rect->left);
+    rect->top += (rect->top - rect->bottom);
+     
     color->r = 255;
     color->g = 255;
     color->b = 255;
